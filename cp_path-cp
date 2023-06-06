@@ -1,0 +1,31 @@
+''' Some *Pseudocode* I wrote to demonstrate what the file would look like '''
+
+import pandas as pd
+import os
+
+
+#various config paradigms
+MDL_BASE = os.environ('SHAREPOINT_DIR')+'/Documents'
+
+qc_folder = MDL_BASE +'/QA/QC and Run Results/'
+j2_folder = MDL_BASE+'/2023 Results/JAK2/'
+
+qc_log    =  qc_folder+'/JAK2 QC and Run Results 2023.xlsx'
+j2_csv    =  'JAK2_RGQ_PCR_RGQ1_HEX_05.17.2023A.csv' #example
+
+
+#--/--/--/--/--/--#--/--/--/--/--/--#--/--/--/--/--/--/--#
+
+#MDL Code:
+
+
+J = pd.read_csv(j2_csv)
+
+# repeat x5
+with pd.ExcelWriter(j2_folder+'JAK2', engine='openpyxl') as writer:
+    copy_paste=J[ J.columns[:5] ]
+    copy_paste.to_excel(writer,"WT Results",startcol=2,startrow=16,index=False)
+    writer.save()
+    
+
+
